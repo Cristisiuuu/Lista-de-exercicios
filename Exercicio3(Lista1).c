@@ -11,17 +11,17 @@ int main() {
     gets(string2);
 
     int i = 0;
-    int different = 0;
+    int diferente = 0;
     //esse while faz a comparação de caractere por caractere;
     while (string1[i] != '\0' && string2[i] != '\0') {
         if (string1[i] != string2[i]) {
-            different = 1;
+            diferente = 1;
             break;
         }
         i++;
     }
 
-    if (different || string1[i] != string2[i]) {
+    if (diferente || string1[i] != string2[i]) {
         puts("Diferentes ==> (0)\n");
     } else {
         puts("Iguais ==> (1)\n");
