@@ -8,7 +8,7 @@ int main() {
     int contagem = 0;
     for (int i = 0; string[i] != '\0'; i++) {
         if (string[i] == '1') {
-            contagemt++;
+            contagem++;
         }
     }
 
