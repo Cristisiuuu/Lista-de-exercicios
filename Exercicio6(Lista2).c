@@ -24,7 +24,7 @@ int main(){
 			}
 		}
 	}				
-	
+	   
 	printf("A diferenca de dias eh de: %d", dia_dia + dia_mes + dia_ano);
 	
 	return 0;
