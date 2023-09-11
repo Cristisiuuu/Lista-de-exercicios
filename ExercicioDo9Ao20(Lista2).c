@@ -46,7 +46,6 @@ struct Funcionario BuscaNome(struct TipoCadastro cadastro, char nome[]) {
             break;
         }
     }
-    
     return resultado;
 }
 
