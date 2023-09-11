@@ -10,7 +10,6 @@ struct dma {
 int eBissexto(int ano) {
     return (ano % 4 == 0 && ano % 100 != 0) || (ano % 400 == 0);
 }
-
 // Função para calcular a diferença em dias entre duas datas
 int diferencaDias(struct dma data1, struct dma data2) {
     int diasNoMes[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
