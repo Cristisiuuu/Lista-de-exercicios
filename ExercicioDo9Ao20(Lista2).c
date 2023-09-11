@@ -176,6 +176,5 @@ int main() {
 
     printf("\nLista de Aniversario por Data e Sexo (10/03/1985, sexo M no exemplo):\n");
     ListaAniversarioSexo(cadastro, 10, 3, 1985, 'M');
-
     return 0;
 }
