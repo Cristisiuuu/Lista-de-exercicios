@@ -68,7 +68,6 @@ struct Funcionario ListaMaraja(struct TipoCadastro cadastro) {
             maraja = cadastro.funcionarios[i];
         }
     }
-    
     return maraja;
 }
 
