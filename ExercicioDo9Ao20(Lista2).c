@@ -116,8 +116,6 @@ void ListaAniversarioSexo(struct TipoCadastro cadastro, int dia, int mes, int an
 int main() {
     struct TipoCadastro cadastro;
     cadastro.quantidade = 0;
-    
-    // Inicialize o cadastro com alguns funcionários para testar as funções
     // Você pode adicionar funcionários aqui ou ler de um arquivo, por exemplo
 
     // Exemplo de adição de funcionários manualmente:
