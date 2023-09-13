@@ -1,81 +1,91 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-struct registro{
-	int telefone;
-	char cidade[50];
-	float tempo;
+struct registro {
+    int telefone;
+    char cidade[50];
+    float tempo;
 };
 
-int main(){
-	FILE *arq1;
-	FILE *arq2;
-	
-	int op = 5;
-	
-	if((arq1 = fopen("registro1.bat","a+b"))== NULL){
-		printf("Erro na abertura do arquivo.");
-		exit(1);
-	}
-	if((arq2 = fopen("registro2.bat","a+b"))== NULL){
-		printf("Erro na abertura do arquivo.");
-		exit(1);
-	}
-	
-	while(op != 0){
-		printf("\t MENU\n");
-		printf(" 1 - Cadastrar Arquivo 1\n");
-		printf(" 2 - Cadastrar Arquivo 2\n");
-		printf(" 3 - Consultar Arquivo 1\n");
-		printf(" 4 - Consultar Arquivo 2\n");
-		printf(" 0 - Sair\n");
-  
-		scanf("%d", &op);
-
-		switch (op) {
-	            case 1:
-	                printf("Digite o numero da conta: ");
-	                scanf("%d", &cliente.numero_conta);
-	                printf("Digite o nome do cliente: ");
-	                scanf(" %[^\n]", cliente.nome_cliente);
-	                printf("Digite o saldo: ");
-	                scanf("%f", &cliente.saldo);
-	                printf("Digite a data da ultima operacao (dia mes ano): ");
-	                scanf("%d/%d/%d", &cliente.data_ultima_operacao.dia,
-	                      &cliente.data_ultima_operacao.mes,
-	                      &cliente.data_ultima_operacao.ano);
-	
-	                fwrite(&cliente, sizeof(struct registro), 1, arquivo);
-	                printf("Registro cadastrado com sucesso.\n");
-	                break;
-	
-	            case 2:
-	                printf("Digite o nome do cliente para consultar: ");
-	                scanf(" %[^\n]", consulta_nome);
-	
-	                rewind(arquivo); // Voltar para o início do arquivo
-	
-	                while (fread(&cliente, sizeof(struct registro), 1, arquivo) == 1) {
-	                    if (strcmp(cliente.nome_cliente, consulta_nome) == 0) {
-	                        printf("Numero da conta: %d\n", cliente.numero_conta);
-	                        printf("Nome do cliente: %s\n", cliente.nome_cliente);
-	                        printf("Saldo: %.2f\n", cliente.saldo);
-	                        printf("Data da ultima operacao: %d/%d/%d\n",
-	                               cliente.data_ultima_operacao.dia,
-	                               cliente.data_ultima_operacao.mes,
-	                               cliente.data_ultima_operacao.ano);
-	                        break; // Encontrou o registro, sai do loop
-	                    }
-	                }
-	                break;
-	
-	            case 3:
-	                fclose(arquivo);
-	                exit(0);
-	
-	            default:
-	                printf("Opcao invalida. Tente novamente.\n");
-	        }
-	}
-	return 0;
+int main() {
+    FILE *arq1;
+    FILE *arq2;
+    
+    struct registro cliente;
+    
+    if ((arq1 = fopen("registro1.bat", "a+b")) == NULL) {
+        printf("Erro na abertura do arquivo 1.\n");
+        exit(1);
+    }
+    
+    if ((arq2 = fopen("registro2.bat", "a+b")) == NULL) {
+        printf("Erro na abertura do arquivo 2.\n");
+        fclose(arq1); // Fecha o primeiro arquivo se o segundo não pôde ser aberto
+        exit(1);
+    }
+    
+    int op;
+    
+    while (1) {
+        printf("\n\t MENU\n");
+        printf(" 1 - Cadastrar registro no Arquivo 1\n");
+        printf(" 2 - Cadastrar registro no Arquivo 2\n");
+        printf(" 3 - Listar telefones das cidades em comum\n");
+        printf(" 0 - Sair\n");
+        
+        scanf("%d", &op);
+        
+        switch (op) {
+            case 1:
+                printf("Digite o telefone: ");
+                scanf("%d", &cliente.telefone);
+                printf("Digite a cidade: ");
+                scanf(" %[^\n]", cliente.cidade);
+                printf("Digite o tempo de ligacao: ");
+                scanf("%f", &cliente.tempo);
+                
+                fwrite(&cliente, sizeof(struct registro), 1, arq1);
+                printf("Registro cadastrado com sucesso no Arquivo 1.\n");
+                break;
+                
+            case 2:
+                printf("Digite o telefone: ");
+                scanf("%d", &cliente.telefone);
+                printf("Digite a cidade: ");
+                scanf(" %[^\n]", cliente.cidade);
+                printf("Digite o tempo de ligacao: ");
+                scanf("%f", &cliente.tempo);
+                
+                fwrite(&cliente, sizeof(struct registro), 1, arq2);
+                printf("Registro cadastrado com sucesso no Arquivo 2.\n");
+                break;
+                
+            case 3:
+                rewind(arq1);
+                rewind(arq2);
+                
+                printf("Cidades em comum:\n");
+                
+                while (fread(&cliente, sizeof(struct registro), 1, arq1) == 1) {
+                    rewind(arq2);
+                    while (fread(&cliente, sizeof(struct registro), 1, arq2) == 1) {
+                        if (strcmp(cliente.cidade, cliente.cidade) == 0) {
+                            printf("Telefone: %d, Cidade: %s\n", cliente.telefone, cliente.cidade);
+                        }
+                    }
+                }
+                break;
+                
+            case 0:
+                fclose(arq1);
+                fclose(arq2);
+                exit(0);
+                
+            default:
+                printf("Opcao invalida. Tente novamente.\n");
+        }
+    }
+    
+    return 0;
 }
